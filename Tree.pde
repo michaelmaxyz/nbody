@@ -1,6 +1,8 @@
 class Tree{
   private Body b;
   private Quad q;
+  //could easily become 3D with an octree and adding z components
+ 
   private Tree NW;
   private Tree SW;
   private Tree NE;
@@ -12,16 +14,13 @@ class Tree{
   
   void drawTree () {
     q.drawQuad();
-    if (NW != null) 
-      NW.drawTree();
-    if (SW != null) 
-      SW.drawTree();
-    if (NE != null) 
-      NE.drawTree();
-    if (SE != null)
-      SE.drawTree();
+    if (NW != null) NW.drawTree();
+    if (SW != null) SW.drawTree();
+    if (NE != null) NE.drawTree();
+    if (SE != null) SE.drawTree();
   }
   
+  //basically if it is a external or internal node
   public boolean doesTreeContainSingleBody() {
     return NW == null && SW == null && NE == null && SE == null;
   }
@@ -37,7 +36,6 @@ class Tree{
       addBodyToQuad(other);
       b = b.combine(other);
     }
-     
   }
   
   void addBodyToQuad(Body other) {
@@ -67,17 +65,16 @@ class Tree{
         }
         SW.insert(other);
       }
-       
   }
   
   public void updateForce(Body b) {
-    if (doesTreeContainSingleBody() && this.b != b || q.len / this.b.distance(b) < .5) {
+    if (doesTreeContainSingleBody() && this.b != b || q.len / this.b.distance(b) < theta) {
       b.addForce(this.b);
     } else {
-      if (this.NW!=null) this.NW.updateForce(b);
-      if (this.SW!=null) this.SW.updateForce(b);
-      if (this.SE!=null) this.SE.updateForce(b);
-      if (this.NE!=null) this.NE.updateForce(b);
+      if (NW!=null) NW.updateForce(b);
+      if (SW!=null) SW.updateForce(b);
+      if (SE!=null) SE.updateForce(b);
+      if (NE!=null) NE.updateForce(b);
     }
   }
 }

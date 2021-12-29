@@ -1,6 +1,10 @@
 class Quad {
+  
+  //points reflect center of quad
   float x;
   float y;
+  
+  //represents the length from center of quad to edge
   float len;
   
   public Quad(float x, float y, float len) {
@@ -10,8 +14,7 @@ class Quad {
   }
   
   void drawQuad() {
-    circle(x,y,5);
-   
+    stroke(255);
     line(x-len,y+len,x+len,y+len);
     line(x-len,y-len,x+len,y-len);
     line(x-len,y+len,x-len,y-len);

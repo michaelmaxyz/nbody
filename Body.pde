@@ -7,12 +7,16 @@ class Body {
   float fy;
   color col;
   float mass;
+  float size;
   
-  Body (float x, float y, float mass, color col) {
+  Body (float x, float y, float vx, float vy, float mass, float size, color col) {
     this.x = x;
     this.y = y;
+    this.vx = vx;
+    this.vy = vy;
     this.mass = mass;
     this.col = col;
+    this.size = size;
   }
   
   void move () {
@@ -36,10 +40,11 @@ class Body {
   }
   
   Body combine(Body other) {
+    //combining using center of mass formula's
     float m = other.mass + mass;
     float newX = (x*mass + other.x*other.mass) / m;
     float newY = (y*mass + other.y*other.mass) / m;
-    return new Body(newX, newY, m, col);
+    return new Body(newX, newY, 0, 0, m, 0, col);
   }
   
   boolean inQuad (Quad q) {
